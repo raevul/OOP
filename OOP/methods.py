@@ -102,28 +102,42 @@
 # Pizza.create_four_cheese(30)
 
 
+# class Vector:
+#     MIN_COORD = 0
+#     MAX_COORD = 100
 
-class Vector:
-    MIN_COORD = 0
-    MAX_COORD = 100
+#     def __init__(self, x, y):
+#         self.x = x
+#         self.y = y
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def get_coord(self):
-        return self.x, self.y
+#     def get_coord(self):
+#         return self.x, self.y
 
     
-v = Vector(1, 2)
-res = Vector.get_coord(v)
-print(res)
+# v = Vector(1, 2)
+# res = Vector.get_coord(v)
+# print(res)
 
+"""task1"""
+class Product:
+    base_price = 20000
 
+    def __init__(self, model, year, color):
+        self.model = model
+        self.year = year
+        self.color = color
 
+    def has_garantiya(self, year):
+        if year > 2:
+            print('Ваша гарантия истекла')
+        else:
+            print('Гарантия действительна')
 
+    @classmethod
+    def charge_price(cls, rate):
+        base_price += rate
 
-
-
-
-
+obj = Product('A218', 2008, 'red') 
+obj.change_price(2) 
+print(obj.has_garantiya(2010)) 
+print(obj.base_price)

@@ -1,0 +1,152 @@
+select column1 || ' ' || column2 from table_name -> объединяет два столбца (конкатенация)
+
+ALIAS:
+select column1 || ' ' || column2 AS new_column_name, column3 from table_name -> дает название на объединенные столбцы
+AS указать не обьязательно
+
+select column1, column2 AS column3 from table_name -> вытаскивает column2 как column3
+
+ORDER BY:
+select * from table_name order by column -> сортирует столбец column по возрастанию(алфавиту), по умол исп asc
+select * from table_name order by column desc -> сортирует столбец column по убыванию
+select * from table_name order by column asc nulls first -> первым выводиться столбец который не заполнен
+
+DISTINCT:
+select distinct column from table_name -> убирает дубликаты
+select distinct on(column1) column1, column2 from table_name order by column1, column2 -> убирает дубликаты из двух столбцов
+
+WHERE -> это фильтр 
+select * from table_name where column = 'value' -> вытаскивает определенный столбец
+select * from table_name where column > 20 
+select column1 || ' ' ||  column2 as "new_column_name", column3 from table_name where column3 <> 7; <> -> не равно
+OR
+AND
+NOT
+IN 
+BETWEEN
+LIKE 
+LIKE -> чуствителен к регистру
+select * from table_name where column like 'A%' -> вытаскивает столбцы которые начинаются на букву A
+select * from table_name where column like '%A' -> вытаскивает столбцы которые заканчивается на букву A
+
+ILIKE 
+ILIKE -> не чуствителен к регистру
+
+IS NULL -> вытаскивает пустые поля
+
+LIMIT -> вытаскивает определенное количество столбцов
+select * from table_name order by column desc limit 10
+
+OFFSET -> указываем с какого поля начинаем выводить
+select * from table_name order by column desc limit 10 offset 4
+
+FETCH -> выводит первые n полей
+select * from table_name order by column desc fetch first (5) row only -> выводит первые 5 полей
+select * from table_name order by column desc offset 5 fetch first (5) row only
+
+Aggregation functions:
+SUM:
+select sum (column1) as age_sum from table_name where column2 = 'value' -> выводит сумму записей из столбца column2
+select sum (column) from table_name
+COUNT:
+select count (column1) from table_name where column2 like 'value' -> выводит количество записей
+select count (column) from table_name
+AVG:
+select avg (column) from table_name -> выводит среднее арифметические число
+MAX:
+select max (column) from table_name
+GROUP BY:
+select column1, count (column2) from table_name group by column1 -> группирует столбцы
+
+select column1, sum(column2) from table_name group by column1
+select column1, avg(column2) from table_name group by column1
+
+HEAVING = WHERE
+select column1, avg (column2) from table_name group by column1 heaving avg (column2) > 2
+
+
+UPDATE -> изменяем таблицу
+UPDATE table_name SET column1= value1, column2=value2 WHERE condition
+update table_name set column='value', column1='value2'  
+
+DELETE -> удаляет
+DELETE FROM table_name WHERE condition
+delete from table_name where column is null
+delete from table_name where column like '%@mail.ru'
+
+ALTER TABLE -> работает с самой таблицей
+ALTET TABLE table_name ADD / RENAME / DROP / ALTER COLUMN ...
+
+ALTER COLUMN - изменяем тип данных столбца
+alter table table_name ALTER COLUMN column type varchar (80) - изменяем
+alter table table_name ALTER COLUMN column set not null - добавляем
+
+RENAME -> переименование
+alter table table_name RENAME COLUMN column1 to column2
+
+ADD -> добавляет
+alter table table_name add constraint name_of_constraint unique (name) -> добавляем ограничение
+
+DROP -> удаляет
+alter table table_name drop column
+
+CASE -> условое (он как if else)
+WHEN = IF
+THEN = : or \n после идет тело 
+END -> конец выражения (условия)
+После END идет название столбца
+select value1, value2, CASE WHEN value2 > 400 THEN 'то что выводиться'
+ELSE 'то что выводиться в противном случае' END column_name from table_name;
+
+SELECT value, CASE WHEN value = 1600 THEN 'equal' WHEN value BETWEEN 1590 AND 1600 
+THEN 'between' ELSE 'out' END column_name FROM table_name;
+
+task 1
+select plaintext from wordform limit 10;
+task 2
+select plaintext from wordform where plaintext like 'a%';
+task 3
+select title, genretype from work where genretype = 'p';
+task 4
+select avg(totalparagraphs) from work where genretype = 't';
+task 5
+select title from work where totalwords > (select (avg(totalwords)) from work);
+task 6
+select charname, speechcount, title from character join character_work on character.charid = character_work.charid join work on work.workid = character_work.workid;
+task 7
+select distinct w.title from character_work as cw join work as w on cw.workid = w.workid where title = 'Romeo and Juliet'; 
+task 8
+
+task 9
+
+task 10
+select title, year from work where year between 1601 and 1700;
+task 11
+select longtitle from work where longtitle ~ 'the';
+task 12
+
+task 13
+select chapterid, description, title from work join chapter on work.workid = chapter.workid;
+task 14
+select p.paragraphnum, c.charname, c.speechcount from character as c join paragraph as p on p.charid = c.charid;
+task 15
+select p.paragraphnum, w.title, w.year from work as w join paragraph as p on p.workid = w.workid;
+
+
+
+--------------------------------------
+
+INDEX, IMPORT, EXPORT
+
+
+INDEX -> это конструкция которая ускоряет выборку
+CREATE INDEX index_name ON table_name (column);
+По дефолту стоит индекс бинарное дерево (btree)
+
+DROP INDEX name_of_index;
+ 
+
+
+ORM
+python --> ORM --> SQL --> DB
+     <----------------------
